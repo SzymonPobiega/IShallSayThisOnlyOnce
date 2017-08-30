@@ -3,6 +3,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Messages;
 using NServiceBus;
+using NServiceBus.Logging;
+using NServiceBus.Serilog;
+using Serilog;
+using Serilog.Filters;
 
 namespace Frontend
 {
@@ -18,6 +22,15 @@ namespace Frontend
 
         static async Task Start()
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .Filter.ByExcluding(Matching.FromSource("NServiceBus.PerformanceMonitorUsersInstaller"))
+                .Filter.ByExcluding(Matching.FromSource("NServiceBus.QueuePermissions"))
+                .WriteTo.Console()
+                .CreateLogger();
+
+            LogManager.Use<SerilogFactory>();
+
             var config = new EndpointConfiguration("OnlyOnce.Demo1.Frontend");
             config.UsePersistence<InMemoryPersistence>();
             config.SendFailedMessagesTo("error");

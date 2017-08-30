@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 using NServiceBus;
+using NServiceBus.Logging;
+using NServiceBus.Serilog;
+using Serilog;
+using Serilog.Core;
+using Serilog.Filters;
 
 class Program
 {
@@ -15,6 +21,15 @@ class Program
 
     static async Task Start()
     {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .Filter.ByExcluding(Matching.FromSource("NServiceBus.PerformanceMonitorUsersInstaller"))
+            .Filter.ByExcluding(Matching.FromSource("NServiceBus.QueuePermissions"))
+            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}")
+            .CreateLogger();
+
+        LogManager.Use<SerilogFactory>();
+
         Console.Title = "OnlyOnce.Demo1.Backend";
 
         var config = new EndpointConfiguration("OnlyOnce.Demo1.Backend");
@@ -34,10 +49,9 @@ class Program
 
         var endpoint = await Endpoint.Start(config).ConfigureAwait(false);
 
-        while (true)
-        {
-            Console.WriteLine("Press <enter> to exit.");
-            Console.ReadLine();
-        }
+        Console.WriteLine("Press <enter> to exit.");
+        Console.ReadLine();
+
+        await endpoint.Stop().ConfigureAwait(false);
     }
 }

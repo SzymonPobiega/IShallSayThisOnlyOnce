@@ -42,12 +42,12 @@ if not exists (select  *
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = $@"
-if(db_id('[{database}]') is null)
+if(db_id('{database}') is not null)
 begin
-    alter database [{database}] set single_user with rollback immediate
+    alter database [{database}] set single_user with rollback immediate;
     drop database [{database}];
-    create database [{database}];
 end
+create database [{database}];
 ";
                 command.ExecuteNonQuery();
             }

@@ -3,6 +3,11 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Messages;
 using NServiceBus;
+using NServiceBus.Logging;
+using NServiceBus.Serilog;
+using Serilog;
+using Serilog.Events;
+using Serilog.Filters;
 
 namespace Downstream
 {
@@ -15,6 +20,15 @@ namespace Downstream
 
         static async Task Start()
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .Filter.ByExcluding(Matching.FromSource("NServiceBus.PerformanceMonitorUsersInstaller"))
+                .Filter.ByExcluding(Matching.FromSource("NServiceBus.QueuePermissions"))
+                .WriteTo.Console()
+                .CreateLogger();
+
+            LogManager.Use<SerilogFactory>();
+
             Console.Title = "OnlyOnce.Demo1.Downstream";
 
             var config = new EndpointConfiguration("OnlyOnce.Demo1.Downstream");
