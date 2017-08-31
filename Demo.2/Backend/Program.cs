@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
@@ -8,6 +9,7 @@ using NServiceBus.Logging;
 using NServiceBus.Serilog;
 using Serilog;
 using Serilog.Core;
+using Serilog.Events;
 using Serilog.Filters;
 
 class Program
@@ -23,9 +25,10 @@ class Program
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
+            .Enrich.With(new ExceptionMessageEnricher())
             .Filter.ByExcluding(Matching.FromSource("NServiceBus.PerformanceMonitorUsersInstaller"))
             .Filter.ByExcluding(Matching.FromSource("NServiceBus.QueuePermissions"))
-            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}")
+            .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{ExceptionMessage}{NewLine}")
             .CreateLogger();
 
         LogManager.Use<SerilogFactory>();
@@ -53,5 +56,25 @@ class Program
         Console.ReadLine();
 
         await endpoint.Stop().ConfigureAwait(false);
+    }
+}
+
+class ExceptionMessageEnricher : ILogEventEnricher
+{
+    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+    {
+        if (logEvent.Exception != null)
+        {
+            logEvent.AddOrUpdateProperty(new LogEventProperty("ExceptionMessage", new ScalarValue(ExceptionWithoutStackTrace(logEvent.Exception))));
+        }
+    }
+
+    string ExceptionWithoutStackTrace(Exception rootException)
+    {
+        if (rootException.InnerException != null)
+        {
+            return ExceptionWithoutStackTrace(rootException.InnerException);
+        }
+        return rootException.Message;
     }
 }

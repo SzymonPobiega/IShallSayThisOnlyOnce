@@ -5,7 +5,7 @@ using Messages;
 
 public class OrderLine
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Id { get; set; }
     [Range((int)Filling.Meat, (int)Filling.Ruskie, ErrorMessage = "Invalid filling.")]
     public Filling Filling { get; set; }
     public int Quantity { get; set; }

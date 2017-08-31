@@ -14,7 +14,7 @@ class AddItemHandler : IHandleMessages<AddItem>
 
         var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId).ConfigureAwait(false);
 
-        if (order.Lines.Any(x => x.Filling == message.Filling))
+        if (order.Lines.Any(x => x.Id == context.MessageId))
         {
             log.Info("Duplicate AddItem message detected. Ignoring");
             return;
@@ -22,10 +22,14 @@ class AddItemHandler : IHandleMessages<AddItem>
 
         var line = new OrderLine
         {
+            Id = context.MessageId,
             Filling = message.Filling,
             Quantity = message.Quantity
         };
+        await Task.Delay(3000).ConfigureAwait(false);
+
         order.Lines.Add(line);
+
 
         var options = new PublishOptions();
         options.RequireImmediateDispatch();
