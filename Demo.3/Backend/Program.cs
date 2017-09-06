@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
@@ -7,11 +8,13 @@ using NServiceBus;
 using NServiceBus.Logging;
 using NServiceBus.Serilog;
 using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using Serilog.Filters;
 
 class Program
 {
-    public const string ConnectionString = @"Data Source=.\SqlExpress;Database=OnlyOnce.Demo1.Backend;Integrated Security=True";
+    public const string ConnectionString = @"Data Source=.\SqlExpress;Database=OnlyOnce.Demo3.Backend;Integrated Security=True";
 
     static void Main(string[] args)
     {
@@ -30,15 +33,20 @@ class Program
 
         LogManager.Use<SerilogFactory>();
 
-        Console.Title = "OnlyOnce.Demo1.Backend";
+        Console.Title = "OnlyOnce.Demo3.Backend";
 
-        var config = new EndpointConfiguration("OnlyOnce.Demo1.Backend");
+        var config = new EndpointConfiguration("OnlyOnce.Demo3.Backend");
         config.UsePersistence<InMemoryPersistence>();
         config.UseTransport<MsmqTransport>().Transactions(TransportTransactionMode.ReceiveOnly);
-        config.Recoverability().Immediate(x => x.NumberOfRetries(5));
-        config.Recoverability().Delayed(x => x.NumberOfRetries(0));
+        config.Recoverability().Immediate(x => x.NumberOfRetries(0));
+        config.Recoverability().Delayed(x =>
+        {
+            x.NumberOfRetries(5);
+            x.TimeIncrease(TimeSpan.FromSeconds(3));
+        });
         config.Recoverability().AddUnrecoverableException(typeof(DbEntityValidationException));
         config.SendFailedMessagesTo("error");
+        config.Pipeline.Register(new DeduplicatingBehavior(), "Deduplicates incoming messages.");
         config.EnableInstallers();
 
         SqlHelper.EnsureDatabaseExists(ConnectionString);
@@ -54,5 +62,25 @@ class Program
         Console.ReadLine();
 
         await endpoint.Stop().ConfigureAwait(false);
+    }
+}
+
+class ExceptionMessageEnricher : ILogEventEnricher
+{
+    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
+    {
+        if (logEvent.Exception != null)
+        {
+            logEvent.AddOrUpdateProperty(new LogEventProperty("ExceptionMessage", new ScalarValue(ExceptionWithoutStackTrace(logEvent.Exception))));
+        }
+    }
+
+    string ExceptionWithoutStackTrace(Exception rootException)
+    {
+        if (rootException.InnerException != null)
+        {
+            return ExceptionWithoutStackTrace(rootException.InnerException);
+        }
+        return rootException.Message;
     }
 }

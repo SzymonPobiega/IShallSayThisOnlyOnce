@@ -27,13 +27,13 @@ namespace Downstream
 
             LogManager.Use<SerilogFactory>();
 
-            Console.Title = "OnlyOnce.Demo2.Downstream";
+            Console.Title = "OnlyOnce.Demo3.Downstream";
 
-            var config = new EndpointConfiguration("OnlyOnce.Demo2.Downstream");
+            var config = new EndpointConfiguration("OnlyOnce.Demo3.Downstream");
             config.UsePersistence<InMemoryPersistence>();
             var transport = config.UseTransport<MsmqTransport>();
             transport.Transactions(TransportTransactionMode.ReceiveOnly);
-            transport.Routing().RegisterPublisher(typeof(ItemAdded), "OnlyOnce.Demo2.Backend");
+            transport.Routing().RegisterPublisher(typeof(ItemAddedOrUpdated), "OnlyOnce.Demo3.Backend");
             config.Recoverability().Immediate(x => x.NumberOfRetries(5));
             config.Recoverability().Delayed(x => x.NumberOfRetries(0));
             config.SendFailedMessagesTo("error");

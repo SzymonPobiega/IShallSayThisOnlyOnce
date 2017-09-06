@@ -5,9 +5,10 @@ using System.Data.Entity;
 public class BackendDataContext :
     DbContext
 {
-    public BackendDataContext(IDbConnection connection)
-        : base((DbConnection)connection, (bool) false)
+    public BackendDataContext(DbConnection connection, DbTransaction transaction)
+        : base(connection, false)
     {
+        base.Database.UseTransaction(transaction);
     }
 
     public DbSet<Order> Orders { get; set; }
@@ -19,7 +20,7 @@ public class BackendDataContext :
         var orders = modelBuilder.Entity<Order>();
         orders.ToTable("Orders");
         orders.HasKey(x => x.OrderId);
-        orders.HasMany(x => x.Lines).WithRequired().HasForeignKey(x => x.OrderId).WillCascadeOnDelete();
+        orders.HasMany(x => x.Lines).WithRequired(x => x.Order).WillCascadeOnDelete();
 
         var lines = modelBuilder.Entity<OrderLine>();
         lines.ToTable("OrderLines");

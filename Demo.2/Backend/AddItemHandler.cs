@@ -30,15 +30,14 @@ class AddItemHandler : IHandleMessages<AddItem>
 
         order.Lines.Add(line);
 
-
-        var options = new PublishOptions();
-        options.RequireImmediateDispatch();
+        var publishOptions = new PublishOptions();
+        publishOptions.RequireImmediateDispatch();
         await context.Publish(new ItemAdded
         {
             Filling = message.Filling,
             OrderId = message.OrderId,
             Quantity = message.Quantity
-        }, options).ConfigureAwait(false);
+        }, publishOptions).ConfigureAwait(false);
 
         await dbContext.SaveChangesAsync()
             .ConfigureAwait(false);

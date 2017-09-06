@@ -39,6 +39,7 @@ namespace Downstream
             config.Recoverability().Immediate(x => x.NumberOfRetries(5));
             config.Recoverability().Delayed(x => x.NumberOfRetries(0));
             config.SendFailedMessagesTo("error");
+            config.EnableInstallers();
 
             var endpoint = await Endpoint.Start(config).ConfigureAwait(false);
 

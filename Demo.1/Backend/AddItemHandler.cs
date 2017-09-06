@@ -12,7 +12,8 @@ class AddItemHandler : IHandleMessages<AddItem>
     {
         var dbContext = new BackendDataContext(new SqlConnection(Program.ConnectionString));
 
-        var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId).ConfigureAwait(false);
+        var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId)
+            .ConfigureAwait(false);
 
         if (order.Lines.Any(x => x.Filling == message.Filling))
         {

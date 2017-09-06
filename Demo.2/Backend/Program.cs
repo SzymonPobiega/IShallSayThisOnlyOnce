@@ -8,8 +8,6 @@ using NServiceBus;
 using NServiceBus.Logging;
 using NServiceBus.Serilog;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 using Serilog.Filters;
 
 class Program
@@ -42,6 +40,7 @@ class Program
         config.Recoverability().Delayed(x => x.NumberOfRetries(0));
         config.Recoverability().AddUnrecoverableException(typeof(DbEntityValidationException));
         config.SendFailedMessagesTo("error");
+        config.EnableInstallers();
 
         SqlHelper.EnsureDatabaseExists(ConnectionString);
 
@@ -56,25 +55,5 @@ class Program
         Console.ReadLine();
 
         await endpoint.Stop().ConfigureAwait(false);
-    }
-}
-
-class ExceptionMessageEnricher : ILogEventEnricher
-{
-    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-    {
-        if (logEvent.Exception != null)
-        {
-            logEvent.AddOrUpdateProperty(new LogEventProperty("ExceptionMessage", new ScalarValue(ExceptionWithoutStackTrace(logEvent.Exception))));
-        }
-    }
-
-    string ExceptionWithoutStackTrace(Exception rootException)
-    {
-        if (rootException.InnerException != null)
-        {
-            return ExceptionWithoutStackTrace(rootException.InnerException);
-        }
-        return rootException.Message;
     }
 }

@@ -31,15 +31,14 @@ namespace Frontend
 
             LogManager.Use<SerilogFactory>();
 
-            Console.Title = "OnlyOnce.Demo1.Frontend";
+            Console.Title = "OnlyOnce.Demo4.Frontend";
 
-            var config = new EndpointConfiguration("OnlyOnce.Demo1.Frontend");
+            var config = new EndpointConfiguration("OnlyOnce.Demo4.Frontend");
             config.UsePersistence<InMemoryPersistence>();
             config.SendFailedMessagesTo("error");
             config.Pipeline.Register(new DuplicateMessagesBehavior(), "Duplicates outgoing messages");
             var routing = config.UseTransport<MsmqTransport>().Routing();
-            routing.RouteToEndpoint(typeof(SubmitOrder).Assembly, "OnlyOnce.Demo1.Backend");
-
+            routing.RouteToEndpoint(typeof(SubmitOrder).Assembly, "OnlyOnce.Demo4.Backend");
             config.EnableInstallers();
 
             var endpoint = await Endpoint.Start(config).ConfigureAwait(false);
@@ -72,7 +71,7 @@ namespace Frontend
                 {
                     var filling = match.Groups[1].Value;
                     var orderId = match.Groups[2].Value;
-                    var message = new AddItem
+                    var message = new AddOrUpdateItem
                     {
                         OrderId = orderId,
                         Filling = (Filling)Enum.Parse(typeof(Filling), filling)

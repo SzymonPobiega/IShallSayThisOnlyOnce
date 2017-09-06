@@ -39,6 +39,7 @@ namespace Frontend
             config.Pipeline.Register(new DuplicateMessagesBehavior(), "Duplicates outgoing messages");
             var routing = config.UseTransport<MsmqTransport>().Routing();
             routing.RouteToEndpoint(typeof(SubmitOrder).Assembly, "OnlyOnce.Demo2.Backend");
+            config.EnableInstallers();
 
             var endpoint = await Endpoint.Start(config).ConfigureAwait(false);
 
