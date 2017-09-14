@@ -54,7 +54,6 @@ namespace Frontend
                 {
                     break;
                 }
-
                 var match = submitExpr.Match(command);
                 if (match.Success)
                 {
@@ -76,6 +75,7 @@ namespace Frontend
                         OrderId = orderId,
                         Filling = (Filling)Enum.Parse(typeof(Filling), filling)
                     };
+                    
                     await endpoint.Send(message).ConfigureAwait(false);
                     continue;
                 }

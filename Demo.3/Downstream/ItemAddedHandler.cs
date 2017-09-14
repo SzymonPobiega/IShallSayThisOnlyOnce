@@ -7,7 +7,7 @@ public class ItemAddedHandler : IHandleMessages<ItemAddedOrUpdated>
 {
     public Task Handle(ItemAddedOrUpdated message, IMessageHandlerContext context)
     {
-        log.Info($"Item of type {message.Filling} added to order {message.OrderId}");
+        log.Info($"Item of type {message.Filling} added to order {message.OrderId}. Message ID: {context.MessageId}");
         return Task.FromResult(0);
     }
 

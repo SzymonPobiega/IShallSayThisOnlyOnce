@@ -12,6 +12,8 @@ namespace Frontend
 {
     class Program
     {
+        static Random r = new Random();
+
         static void Main(string[] args)
         {
             Start().GetAwaiter().GetResult();
@@ -74,7 +76,8 @@ namespace Frontend
                     var message = new AddOrUpdateItem
                     {
                         OrderId = orderId,
-                        Filling = (Filling)Enum.Parse(typeof(Filling), filling)
+                        Filling = (Filling)Enum.Parse(typeof(Filling), filling),
+                        Quantity = r.Next(10)
                     };
                     await endpoint.Send(message).ConfigureAwait(false);
                     continue;

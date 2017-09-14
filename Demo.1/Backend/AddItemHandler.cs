@@ -12,31 +12,28 @@ class AddItemHandler : IHandleMessages<AddItem>
     {
         var dbContext = new BackendDataContext(new SqlConnection(Program.ConnectionString));
 
-        var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId)
-            .ConfigureAwait(false);
+        var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId);
 
         if (order.Lines.Any(x => x.Filling == message.Filling))
         {
-            log.Info("Duplicate AddItem message detected. Ignoring");
+            log.Info("Duplicate AddItem message detected. Ignoring.");
             return;
         }
 
-        var line = new OrderLine()
+        var line = new OrderLine
         {
             Filling = message.Filling
         };
         order.Lines.Add(line);
 
-        var options = new PublishOptions();
-        options.RequireImmediateDispatch();
-        await context.Publish(new ItemAdded
+        await context.PublishImmediately(new ItemAdded
         {
             Filling = message.Filling,
             OrderId = message.OrderId
-        }, options).ConfigureAwait(false);
+        });
 
-        await dbContext.SaveChangesAsync()
-            .ConfigureAwait(false);
+        await dbContext.SaveChangesAsync();
+        log.Info($"Item {message.Filling} added.");
     }
 
     static readonly ILog log = LogManager.GetLogger<AddItemHandler>();
