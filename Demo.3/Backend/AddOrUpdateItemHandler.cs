@@ -15,10 +15,13 @@ class AddOrUpdateItemHandler : IHandleMessages<AddOrUpdateItem>
         var messageId = Guid.Parse(context.MessageId);
         var nextMessageId = GuidUtility.CreateDeterministicGuid(messageId, ReadOnlySettings.EndpointName());
 
-        var dbContext = context.Extensions.Get<BackendDataContext>();
+        var dbContext = context.Extensions
+            .Get<BackendDataContext>();
+            
         if (!dbContext.Processed)
         {
-            var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId).ConfigureAwait(false);
+            var order = await dbContext.Orders
+                .FirstAsync(o => o.OrderId == message.OrderId).ConfigureAwait(false);
             var line = new OrderLine
             {
                 Filling = message.Filling,

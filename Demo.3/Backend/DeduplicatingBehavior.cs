@@ -9,12 +9,11 @@ class DeduplicatingBehavior : Behavior<IIncomingLogicalMessageContext>
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
         var dbContext = new BackendDataContext(new SqlConnection(Program.ConnectionString));
-        var processedMessage = await dbContext.ProcessedMessages.FirstOrDefaultAsync(m => m.MessageId == context.MessageId)
-            .ConfigureAwait(false);
+        var processedMessage = await dbContext.ProcessedMessages
+            .FirstOrDefaultAsync(m => m.MessageId == context.MessageId);
 
         if (processedMessage != null)
         {
-            //We processed the message but we are not sure if we dispatched the outgoing messages.
             dbContext.Processed = true;
         }
         else
@@ -24,7 +23,7 @@ class DeduplicatingBehavior : Behavior<IIncomingLogicalMessageContext>
 
         context.Extensions.Set(dbContext);
 
-        await next().ConfigureAwait(false);
+        await next().ConfigureAwait(false); //Process
 
         await dbContext.SaveChangesAsync()
             .ConfigureAwait(false);
