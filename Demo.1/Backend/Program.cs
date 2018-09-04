@@ -11,7 +11,7 @@ using Serilog.Filters;
 
 class Program
 {
-    public const string ConnectionString = @"Data Source=.\SqlExpress;Database=OnlyOnce.Demo1.Backend;Integrated Security=True";
+    public const string ConnectionString = @"Data Source=(local);Database=OnlyOnce.Demo1.Orders;Integrated Security=True";
 
     static void Main(string[] args)
     {
@@ -23,16 +23,16 @@ class Program
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .Enrich.With(new ExceptionMessageEnricher())
-            .Filter.ByExcluding(Matching.FromSource("NServiceBus.PerformanceMonitorUsersInstaller"))
-            .Filter.ByExcluding(Matching.FromSource("NServiceBus.QueuePermissions"))
+            .Filter.ByExcluding(Matching.FromSource("NServiceBus.Transport.Msmq.QueuePermissions"))
+            .Filter.ByExcluding(Matching.FromSource("NServiceBus.SubscriptionReceiverBehavior"))
             .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{ExceptionMessage}{NewLine}")
             .CreateLogger();
 
         LogManager.Use<SerilogFactory>();
 
-        Console.Title = "OnlyOnce.Demo1.Backend";
+        Console.Title = "OnlyOnce.Demo1.Orders";
 
-        var config = new EndpointConfiguration("OnlyOnce.Demo1.Backend");
+        var config = new EndpointConfiguration("OnlyOnce.Demo1.Orders");
         config.UsePersistence<InMemoryPersistence>();
         config.UseTransport<MsmqTransport>().Transactions(TransportTransactionMode.ReceiveOnly);
         config.Recoverability().Immediate(x => x.NumberOfRetries(5));
@@ -43,7 +43,7 @@ class Program
 
         SqlHelper.EnsureDatabaseExists(ConnectionString);
 
-        using (var receiverDataContext = new BackendDataContext(new SqlConnection(ConnectionString)))
+        using (var receiverDataContext = new OrdersDataContext(new SqlConnection(ConnectionString)))
         {
             receiverDataContext.Database.Initialize(true);
         }

@@ -10,7 +10,7 @@ class SubmitOrderHandler : IHandleMessages<SubmitOrder>
 {
     public async Task Handle(SubmitOrder message, IMessageHandlerContext context)
     {
-        var dbContext = new BackendDataContext(new SqlConnection(Program.ConnectionString));
+        var dbContext = new OrdersDataContext(new SqlConnection(Program.ConnectionString));
 
         if (await dbContext.Orders.AnyAsync(o => o.OrderId == message.OrderId).ConfigureAwait(false))
         {

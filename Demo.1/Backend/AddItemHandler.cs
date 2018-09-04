@@ -10,7 +10,7 @@ class AddItemHandler : IHandleMessages<AddItem>
 {
     public async Task Handle(AddItem message, IMessageHandlerContext context)
     {
-        var dbContext = new BackendDataContext(new SqlConnection(Program.ConnectionString));
+        var dbContext = new OrdersDataContext(new SqlConnection(Program.ConnectionString));
 
         var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId);
 

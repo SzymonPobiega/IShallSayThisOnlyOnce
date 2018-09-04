@@ -2,10 +2,10 @@ using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
 
-public class BackendDataContext :
+public class OrdersDataContext :
     DbContext
 {
-    public BackendDataContext(IDbConnection connection)
+    public OrdersDataContext(IDbConnection connection)
         : base((DbConnection)connection, (bool) false)
     {
     }
