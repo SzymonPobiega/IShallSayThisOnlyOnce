@@ -30,7 +30,7 @@ class Program
 
         LogManager.Use<SerilogFactory>();
 
-        Console.Title = "OnlyOnce.Demo1.Orders";
+        Console.Title = "Orders";
 
         var config = new EndpointConfiguration("OnlyOnce.Demo1.Orders");
         config.UsePersistence<InMemoryPersistence>();

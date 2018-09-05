@@ -24,9 +24,9 @@ class Program
 
         LogManager.Use<SerilogFactory>();
 
-        Console.Title = "OnlyOnce.Demo1.Billing";
+        Console.Title = "Billing";
 
-        var config = new EndpointConfiguration("OnlyOnce.Demo1.Downstream");
+        var config = new EndpointConfiguration("OnlyOnce.Demo1.Billing");
         config.UsePersistence<InMemoryPersistence>();
         var transport = config.UseTransport<MsmqTransport>();
         transport.Transactions(TransportTransactionMode.ReceiveOnly);

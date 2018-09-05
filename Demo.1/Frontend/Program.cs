@@ -28,7 +28,7 @@ class Program
 
         LogManager.Use<SerilogFactory>();
 
-        Console.Title = "OnlyOnce.Demo1.Frontend";
+        Console.Title = "Frontend";
 
         var config = new EndpointConfiguration("OnlyOnce.Demo1.Frontend");
         config.UsePersistence<InMemoryPersistence>();
@@ -42,7 +42,7 @@ class Program
         var endpoint = await Endpoint.Start(config).ConfigureAwait(false);
 
         Console.WriteLine("'submit <order-id>' to create a new order.");
-        Console.WriteLine($"'add {string.Join("|", Enum.GetNames(typeof(Filling)))} to <order-id>' to add item with selected filling.");
+        Console.WriteLine($"'add ({string.Join("|", Enum.GetNames(typeof(Filling)))}) to <order-id>' to add item with selected filling.");
 
         while (true)
         {
