@@ -8,24 +8,35 @@ class DeduplicatingBehavior : Behavior<IIncomingLogicalMessageContext>
 {
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
-        var dbContext = new BackendDataContext(new SqlConnection(Program.ConnectionString));
-        var processedMessage = await dbContext.ProcessedMessages
-            .FirstOrDefaultAsync(m => m.MessageId == context.MessageId);
+        var dbContext = new OrdersDataContext(new SqlConnection(Program.ConnectionString));
 
-        if (processedMessage != null)
+        using (var dbContextTransaction = dbContext.Database.BeginTransaction())
         {
-            dbContext.Processed = true;
+
+            var processedMessage = await dbContext.ProcessedMessages
+                .FirstOrDefaultAsync(m => m.MessageId == context.MessageId);
+
+
+            if (processedMessage != null)
+            {
+                dbContext.Processed = true;
+            }
+            else
+            {
+                dbContext.ProcessedMessages.Add(new ProcessedMessage {MessageId = context.MessageId});
+            }
+
+            await dbContext.SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            context.Extensions.Set(dbContext);
+
+            await next().ConfigureAwait(false); //Process
+
+            await dbContext.SaveChangesAsync()
+                .ConfigureAwait(false);
+
+            dbContextTransaction.Commit();
         }
-        else
-        {
-            dbContext.ProcessedMessages.Add(new ProcessedMessage {MessageId = context.MessageId});
-        }
-
-        context.Extensions.Set(dbContext);
-
-        await next().ConfigureAwait(false); //Process
-
-        await dbContext.SaveChangesAsync()
-            .ConfigureAwait(false);
     }
 }

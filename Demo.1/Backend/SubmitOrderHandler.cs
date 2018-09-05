@@ -25,6 +25,7 @@ class SubmitOrderHandler : IHandleMessages<SubmitOrder>
         dbContext.Orders.Add(order);
 
         await dbContext.SaveChangesAsync().ConfigureAwait(false);
+        log.Info($"Order {message.OrderId} created.");
     }
 
     static readonly ILog log = LogManager.GetLogger<SubmitOrderHandler>();

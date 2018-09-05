@@ -10,7 +10,7 @@ class SubmitOrderHandler : IHandleMessages<SubmitOrder>
 {
     public async Task Handle(SubmitOrder message, IMessageHandlerContext context)
     {
-        var dbContext = context.Extensions.Get<BackendDataContext>();
+        var dbContext = context.Extensions.Get<OrdersDataContext>();
         if (dbContext.Processed)
         {
             return;
@@ -21,6 +21,7 @@ class SubmitOrderHandler : IHandleMessages<SubmitOrder>
             OrderId = message.OrderId
         };
         dbContext.Orders.Add(order);
+        log.Info($"Order {message.OrderId} created.");
     }
 
     static readonly ILog log = LogManager.GetLogger<SubmitOrderHandler>();

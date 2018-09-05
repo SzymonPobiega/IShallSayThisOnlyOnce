@@ -8,13 +8,11 @@ using NServiceBus;
 using NServiceBus.Logging;
 using NServiceBus.Serilog;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 using Serilog.Filters;
 
 class Program
 {
-    public const string ConnectionString = @"Data Source=.\SqlExpress;Database=OnlyOnce.Demo3.Backend;Integrated Security=True";
+    public const string ConnectionString = @"Data Source=(local);Database=OnlyOnce.Demo3.Orders;Integrated Security=True";
 
     static void Main(string[] args)
     {
@@ -26,16 +24,16 @@ class Program
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .Enrich.With(new ExceptionMessageEnricher())
-            .Filter.ByExcluding(Matching.FromSource("NServiceBus.PerformanceMonitorUsersInstaller"))
-            .Filter.ByExcluding(Matching.FromSource("NServiceBus.QueuePermissions"))
+            .Filter.ByExcluding(Matching.FromSource("NServiceBus.Transport.Msmq.QueuePermissions"))
+            .Filter.ByExcluding(Matching.FromSource("NServiceBus.SubscriptionReceiverBehavior"))
             .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{ExceptionMessage}{NewLine}")
             .CreateLogger();
 
         LogManager.Use<SerilogFactory>();
 
-        Console.Title = "OnlyOnce.Demo3.Backend";
+        Console.Title = "Orders";
 
-        var config = new EndpointConfiguration("OnlyOnce.Demo3.Backend");
+        var config = new EndpointConfiguration("OnlyOnce.Demo3.Orders");
         config.UsePersistence<InMemoryPersistence>();
         config.UseTransport<MsmqTransport>().Transactions(TransportTransactionMode.ReceiveOnly);
         config.Recoverability().Immediate(x => x.NumberOfRetries(0));
@@ -51,7 +49,7 @@ class Program
 
         SqlHelper.EnsureDatabaseExists(ConnectionString);
 
-        using (var receiverDataContext = new BackendDataContext(new SqlConnection(ConnectionString)))
+        using (var receiverDataContext = new OrdersDataContext(new SqlConnection(ConnectionString)))
         {
             receiverDataContext.Database.Initialize(true);
         }
@@ -62,25 +60,5 @@ class Program
         Console.ReadLine();
 
         await endpoint.Stop().ConfigureAwait(false);
-    }
-}
-
-class ExceptionMessageEnricher : ILogEventEnricher
-{
-    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-    {
-        if (logEvent.Exception != null)
-        {
-            logEvent.AddOrUpdateProperty(new LogEventProperty("ExceptionMessage", new ScalarValue(ExceptionWithoutStackTrace(logEvent.Exception))));
-        }
-    }
-
-    string ExceptionWithoutStackTrace(Exception rootException)
-    {
-        if (rootException.InnerException != null)
-        {
-            return ExceptionWithoutStackTrace(rootException.InnerException);
-        }
-        return rootException.Message;
     }
 }

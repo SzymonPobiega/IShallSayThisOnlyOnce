@@ -16,7 +16,7 @@ class AddOrUpdateItemHandler : IHandleMessages<AddOrUpdateItem>
         var nextMessageId = GuidUtility.CreateDeterministicGuid(messageId, ReadOnlySettings.EndpointName());
 
         var dbContext = context.Extensions
-            .Get<BackendDataContext>();
+            .Get<OrdersDataContext>();
             
         if (!dbContext.Processed)
         {

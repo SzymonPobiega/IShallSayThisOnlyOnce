@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend", "Frontend\Frontend.csproj", "{2B18B095-EBFC-4610-B75E-9E2A9DF13011}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend", "Backend\Backend.csproj", "{CC88D0DA-33A7-4DDA-BC2F-F0EF5C239F3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orders", "Backend\Orders.csproj", "{CC88D0DA-33A7-4DDA-BC2F-F0EF5C239F3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messages", "Messages\Messages.csproj", "{9C31F0B3-8842-4E26-B86C-508CE27F89D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Downstream", "Downstream\Downstream.csproj", "{EED5AE43-4851-4BAE-8D63-DFD5C515EB9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billing", "Downstream\Billing.csproj", "{EED5AE43-4851-4BAE-8D63-DFD5C515EB9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
