@@ -1,0 +1,5 @@
+cmd.exe -cur_console:n /k "C:\Projects\IShallSayThisOnlyOnce\Demo.0\Frontend\bin\Debug\net461\Frontend.exe"
+
+cmd.exe -cur_console:s1T66Vn /k "C:\Projects\IShallSayThisOnlyOnce\Demo.0\Backend\bin\Debug\net461\Orders.exe"
+
+cmd.exe -cur_console:s2TVn /k "C:\Projects\IShallSayThisOnlyOnce\Demo.0\Downstream\bin\Debug\net461\Billing.exe"
