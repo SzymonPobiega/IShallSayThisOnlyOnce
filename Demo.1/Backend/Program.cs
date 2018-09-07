@@ -38,6 +38,7 @@ class Program
         config.Recoverability().Immediate(x => x.NumberOfRetries(5));
         config.Recoverability().Delayed(x => x.NumberOfRetries(0));
         config.Recoverability().AddUnrecoverableException(typeof(DbEntityValidationException));
+        config.Pipeline.Register(new BlowUpWhenPublishingBehavior(), "Blows up when publishing");
         config.SendFailedMessagesTo("error");
         config.EnableInstallers();
 

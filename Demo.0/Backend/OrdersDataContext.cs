@@ -2,13 +2,12 @@ using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
 
-public class BackendDataContext :
+public class OrdersDataContext :
     DbContext
 {
-    public BackendDataContext(DbConnection connection, DbTransaction transaction)
-        : base(connection, false)
+    public OrdersDataContext(IDbConnection connection)
+        : base((DbConnection)connection, (bool) false)
     {
-        base.Database.UseTransaction(transaction);
     }
 
     public DbSet<Order> Orders { get; set; }
@@ -20,7 +19,7 @@ public class BackendDataContext :
         var orders = modelBuilder.Entity<Order>();
         orders.ToTable("Orders");
         orders.HasKey(x => x.OrderId);
-        orders.HasMany(x => x.Lines).WithRequired(x => x.Order).WillCascadeOnDelete();
+        orders.HasMany(x => x.Lines).WithRequired().HasForeignKey(x => x.OrderId).WillCascadeOnDelete();
 
         var lines = modelBuilder.Entity<OrderLine>();
         lines.ToTable("OrderLines");

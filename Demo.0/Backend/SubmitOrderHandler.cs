@@ -10,9 +10,14 @@ class SubmitOrderHandler : IHandleMessages<SubmitOrder>
 {
     public async Task Handle(SubmitOrder message, IMessageHandlerContext context)
     {
-        var persistenceSession = context.SynchronizedStorageSession.SqlPersistenceSession();
-        var dbContext = new OrdersDataContext(persistenceSession.Connection, persistenceSession.Transaction);
-        
+        var dbContext = new OrdersDataContext(new SqlConnection(Program.ConnectionString));
+
+        if (await dbContext.Orders.AnyAsync(o => o.OrderId == message.OrderId).ConfigureAwait(false))
+        {
+            log.Info("Duplicate SubmitOrder message detected. Ignoring");
+            return;
+        }
+
         var order = new Order
         {
             OrderId = message.OrderId

@@ -26,11 +26,11 @@ class Program
 
         Console.Title = "Billing";
 
-        var config = new EndpointConfiguration("OnlyOnce.Demo4.Billing");
+        var config = new EndpointConfiguration("OnlyOnce.Demo0.Billing");
         config.UsePersistence<InMemoryPersistence>();
         var transport = config.UseTransport<MsmqTransport>();
         transport.Transactions(TransportTransactionMode.ReceiveOnly);
-        transport.Routing().RegisterPublisher(typeof(ItemAddedOrUpdated), "OnlyOnce.Demo4.Orders");
+        transport.Routing().RegisterPublisher(typeof(ItemAdded), "OnlyOnce.Demo0.Orders");
         config.Recoverability().Immediate(x => x.NumberOfRetries(5));
         config.Recoverability().Delayed(x => x.NumberOfRetries(0));
         config.SendFailedMessagesTo("error");

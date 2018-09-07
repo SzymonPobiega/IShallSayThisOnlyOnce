@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using NServiceBus;
 using NServiceBus.Logging;
-using NServiceBus.Persistence.Sql;
 using NServiceBus.Serilog;
 using Serilog;
 using Serilog.Filters;
 
 class Program
 {
-    public const string ConnectionString = @"Data Source=(local);Database=OnlyOnce.Demo4.Orders;Integrated Security=True";
+    public const string ConnectionString = @"Data Source=(local);Database=OnlyOnce.Demo0.Orders;Integrated Security=True";
 
     static void Main(string[] args)
     {
@@ -34,26 +32,19 @@ class Program
 
         Console.Title = "Orders";
 
-        var config = new EndpointConfiguration("OnlyOnce.Demo4.Orders");
-        var persistence = config.UsePersistence<SqlPersistence>();
-        persistence.ConnectionBuilder(() => new SqlConnection(ConnectionString));
-        persistence.SubscriptionSettings().DisableCache();
-        persistence.SqlDialect<SqlDialect.MsSqlServer>();
-        config.UseTransport<MsmqTransport>();
-        config.Recoverability().Immediate(x => x.NumberOfRetries(0));
-        config.Recoverability().Delayed(x =>
-        {
-            x.NumberOfRetries(5);
-            x.TimeIncrease(TimeSpan.FromSeconds(3));
-        });
+        var config = new EndpointConfiguration("OnlyOnce.Demo0.Orders");
+        config.UsePersistence<InMemoryPersistence>();
+        config.UseTransport<MsmqTransport>().Transactions(TransportTransactionMode.ReceiveOnly);
+        config.Recoverability().Immediate(x => x.NumberOfRetries(5));
+        config.Recoverability().Delayed(x => x.NumberOfRetries(0));
         config.Recoverability().AddUnrecoverableException(typeof(DbEntityValidationException));
+        config.Pipeline.Register(new BlowUpWhenPublishingBehavior(), "Blows up when publishing");
         config.SendFailedMessagesTo("error");
-        config.EnableOutbox();
         config.EnableInstallers();
 
         SqlHelper.EnsureDatabaseExists(ConnectionString);
 
-        using (var receiverDataContext = new OrdersDataContext(new SqlConnection(ConnectionString), null))
+        using (var receiverDataContext = new OrdersDataContext(new SqlConnection(ConnectionString)))
         {
             receiverDataContext.Database.Initialize(true);
         }

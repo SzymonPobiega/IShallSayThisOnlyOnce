@@ -11,7 +11,7 @@ class AddOrUpdateItemHandler : IHandleMessages<AddOrUpdateItem>
     public async Task Handle(AddOrUpdateItem message, IMessageHandlerContext context)
     {
         var persistenceSession = context.SynchronizedStorageSession.SqlPersistenceSession();
-        var dbContext = new BackendDataContext(persistenceSession.Connection, persistenceSession.Transaction);
+        var dbContext = new OrdersDataContext(persistenceSession.Connection, persistenceSession.Transaction);
 
         var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId).ConfigureAwait(false);
         var existingLine = order.Lines.FirstOrDefault(x => x.Filling == message.Filling);
@@ -39,6 +39,8 @@ class AddOrUpdateItemHandler : IHandleMessages<AddOrUpdateItem>
             Quantity = message.Quantity
         }).ConfigureAwait(false);
         await dbContext.SaveChangesAsync().ConfigureAwait(false);
+
+        log.Info($"Item {message.Filling} added.");
     }
 
     static readonly ILog log = LogManager.GetLogger<AddOrUpdateItemHandler>();

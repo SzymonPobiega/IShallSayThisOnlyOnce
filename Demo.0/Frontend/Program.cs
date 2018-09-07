@@ -10,8 +10,6 @@ using Serilog.Filters;
 
 class Program
 {
-    static Random r = new Random();
-
     static void Main(string[] args)
     {
         Start().GetAwaiter().GetResult();
@@ -32,12 +30,13 @@ class Program
 
         Console.Title = "Frontend";
 
-        var config = new EndpointConfiguration("OnlyOnce.Demo4.Frontend");
+        var config = new EndpointConfiguration("OnlyOnce.Demo0.Frontend");
         config.UsePersistence<InMemoryPersistence>();
         config.SendFailedMessagesTo("error");
         config.Pipeline.Register(new DuplicateMessagesBehavior(), "Duplicates outgoing messages");
         var routing = config.UseTransport<MsmqTransport>().Routing();
-        routing.RouteToEndpoint(typeof(SubmitOrder).Assembly, "OnlyOnce.Demo4.Orders");
+        routing.RouteToEndpoint(typeof(SubmitOrder).Assembly, "OnlyOnce.Demo0.Orders");
+
         config.EnableInstallers();
 
         var endpoint = await Endpoint.Start(config).ConfigureAwait(false);
@@ -70,11 +69,10 @@ class Program
             {
                 var filling = match.Groups[1].Value;
                 var orderId = match.Groups[2].Value;
-                var message = new AddOrUpdateItem
+                var message = new AddItem
                 {
                     OrderId = orderId,
-                    Filling = (Filling)Enum.Parse(typeof(Filling), filling),
-                    Quantity = r.Next(10)
+                    Filling = (Filling)Enum.Parse(typeof(Filling), filling)
                 };
                 await endpoint.Send(message).ConfigureAwait(false);
                 continue;
