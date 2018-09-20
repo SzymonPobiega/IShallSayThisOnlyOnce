@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Messages;
@@ -10,6 +11,9 @@ using Serilog.Filters;
 
 class Program
 {
+    const string letters = "abcdefghijklmnopqrstuvwxyz";
+    static Random r = new Random();
+
     static void Main(string[] args)
     {
         Start().GetAwaiter().GetResult();
@@ -74,7 +78,10 @@ class Program
                     OrderId = orderId,
                     Filling = (Filling)Enum.Parse(typeof(Filling), filling)
                 };
-                await endpoint.Send(message).ConfigureAwait(false);
+                var messageId = new string(Enumerable.Range(0, 4).Select(i => letters[r.Next(letters.Length)]).ToArray());
+                var options = new SendOptions();
+                //options.SetMessageId(messageId);
+                await endpoint.Send(message, options).ConfigureAwait(false);
                 continue;
             }
             Console.WriteLine("Unrecognized command.");

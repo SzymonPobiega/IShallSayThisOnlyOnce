@@ -11,4 +11,14 @@ public class OrderLine
     public Filling Filling { get; set; }
     [Index("IX_UniqueLine", 2, IsUnique = true)]
     public string OrderId { get; set; }
+
+    public OrderLine()
+    {
+
+    }
+
+    public OrderLine(Filling filling)
+    {
+        Filling = filling;
+    }
 }
