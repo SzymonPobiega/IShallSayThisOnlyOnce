@@ -8,10 +8,10 @@ using NServiceBus.Logging;
 
 class AddItemHandler : IHandleMessages<AddItem>
 {
-    public async Task Handle(AddItem message, IMessageHandlerContext context)
+    public async Task Handle(AddItem message, 
+        IMessageHandlerContext context)
     {
-        var dbContext = new OrdersDataContext(
-            new SqlConnection(Program.ConnectionString));
+        var dbContext = new OrdersDataContext();
 
         var order = await dbContext.Orders
             .FirstAsync(o => o.OrderId == message.OrderId);
@@ -28,7 +28,6 @@ class AddItemHandler : IHandleMessages<AddItem>
                 Filling = message.Filling,
                 Quantity = message.Quantity
             };
-            await Task.Delay(3000);
             order.Lines.Add(line);
             await dbContext.SaveChangesAsync();
             log.Info($"Item {message.Filling} added.");
