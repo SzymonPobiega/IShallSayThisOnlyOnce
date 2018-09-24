@@ -7,7 +7,8 @@ using NServiceBus.Logging;
 
 class AddItemHandler : IHandleMessages<AddItem>
 {
-    public async Task Handle(AddItem message, IMessageHandlerContext context)
+    public async Task Handle(AddItem message, 
+        IMessageHandlerContext context)
     {
         var dbContext = new OrdersDataContext();
 
