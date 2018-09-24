@@ -5,6 +5,16 @@ using Messages;
 
 public class OrderLine
 {
+    public OrderLine()
+    {
+
+    }
+
+    public OrderLine(Filling filling)
+    {
+        Filling = filling;
+    }
+
     public Guid Id { get; set; } = Guid.NewGuid();
     [Index("IX_UniqueLine", 1, IsUnique = true)]
     [Range((int)Filling.Meat, (int)Filling.Ruskie, ErrorMessage = "Invalid filling.")]

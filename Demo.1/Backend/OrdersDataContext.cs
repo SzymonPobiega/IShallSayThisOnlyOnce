@@ -1,12 +1,19 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 public class OrdersDataContext :
     DbContext
 {
+    public OrdersDataContext()
+        : this(new SqlConnection(Program.ConnectionString))
+    {
+
+    }
+
     public OrdersDataContext(IDbConnection connection)
-        : base((DbConnection)connection, (bool) false)
+        : base((DbConnection)connection, (bool)false)
     {
     }
 

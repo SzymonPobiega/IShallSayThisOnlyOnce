@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Messages;
@@ -10,9 +9,10 @@ class AddItemHandler : IHandleMessages<AddItem>
 {
     public async Task Handle(AddItem message, IMessageHandlerContext context)
     {
-        var dbContext = new OrdersDataContext(new SqlConnection(Program.ConnectionString));
+        var dbContext = new OrdersDataContext();
 
-        var order = await dbContext.Orders.FirstAsync(o => o.OrderId == message.OrderId);
+        var order = await dbContext.Orders
+            .FirstAsync(o => o.OrderId == message.OrderId);
 
         if (order.Lines.Any(x => x.Filling == message.Filling))
         {
@@ -20,17 +20,11 @@ class AddItemHandler : IHandleMessages<AddItem>
             return;
         }
 
-        var line = new OrderLine
-        {
-            Filling = message.Filling
-        };
+        var line = new OrderLine(message.Filling);
         order.Lines.Add(line);
 
-        await context.PublishImmediately(new ItemAdded
-        {
-            Filling = message.Filling,
-            OrderId = message.OrderId
-        });
+        await context.PublishImmediately(
+            new ItemAdded(message.OrderId, message.Filling));
 
         await dbContext.SaveChangesAsync();
         log.Info($"Item {message.Filling} added.");
