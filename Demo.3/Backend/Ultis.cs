@@ -6,9 +6,9 @@ using System.Text;
 /// <summary>
 /// Based on http://code.logos.com/blog/2011/04/generating_a_deterministic_guid.html
 /// </summary>
-public static class GuidUtility
+public static class Ultis
 {
-    public static Guid CreateDeterministicGuid(Guid previousGuid, string suffix)
+    public static Guid DeterministicGuid(Guid previousGuid, string suffix)
     {
         // convert the name to a sequence of octets (as defined by the standard or conventions of its namespace) (step 3)
         // ASSUME: UTF-8 encoding is always appropriate

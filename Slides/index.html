@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>I shall say this only once</title>
+		<meta name="description" content="I shall say this only once">
+		<meta name="author" content="Szymon Pobiega">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<style media="screen" type="text/css">
+			.reveal section img { background:none; border:none; box-shadow:none; }
+
+			.reveal table {
+			  margin: auto;
+			  border-collapse: collapse;
+			  border-spacing: 0;
+			}
+
+			.reveal table th {
+			  font-weight: bold;
+			}
+
+			.reveal table th,
+			.reveal table td {
+			  text-align: left;
+			  padding: 0.2em 0.5em 0.2em 0.5em;
+			  border-bottom: 1px solid;
+			}
+
+			div.withComments {
+			  background-color: rgb(20, 98, 135); 
+			  width: 100%; 
+			  height: 400%; 
+			  position: absolute; 
+			  top: -100%; 
+			  left: -65%; 
+			  z-index: -1;
+			}
+
+			div.contentComment{
+				width: 30%; 
+				display: inline-block; 
+				margin-right: 5%; 
+				vertical-align: top;
+			}
+
+			div.commentedContent{
+				width: 60%; 
+				display: inline-block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>I shall say this only once</h2>
+					<p>Szymon Pobiega </p>
+					<p><a href="https://twitter.com/Szymon Pobiega">@SzymonPobiega</a></p>
+				</section>
+				<section>
+					<figure>
+						<img src="images/kristen-cooke.jpg" alt=""/>
+						<figcaption>
+							<small>Source: <a href="https://www.imdb.com/title/tt0086659/mediaviewer/rm2056077312">IMDb</a></small>
+						</figcaption>
+					</figure>
+				</section>
+				<section>
+					<h2>Pierogi time!</h2>
+					<figure>
+						<img src="images/pierogi.jpg" alt="" class="stretch"/>
+						<figcaption>
+							<small>Autor: Stako (File:Ruskie.jpg) [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a> lub <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>], <a href="https://commons.wikimedia.org/wiki/File:Pierogi_z_cebulk%C4%85.jpg">Wikimedia Commons</a></small>
+						</figcaption>
+					</figure>
+				</section>
+				<section>
+					<img src="images/scaling.png"/>
+				</section>
+				<section>
+					<img src="images/eda.png"/>
+				</section>
+				<section>
+					<h2>Exactly once delivery in face of failures</h2>
+					<img src="images/dedup-process.png"/>
+				</section>
+				<section>
+					<img src="images/two-generals-1.png"/>
+				</section>
+				<section>
+					<img src="images/two-generals-2.png"/>
+				</section>
+				<section>
+					<img src="images/two-generals-3.png"/>
+				</section>
+				<section>
+					<h2 class="fragment strike">Exactly once delivery</h2>
+					<h2 class="fragment">Exactly once processing</h2>						
+				</section>
+				<section>
+					<img src="images/two-generals-4.png"/>
+				</section>
+				<section>
+					<h2 class="fragment strike">Exactly once processing</h2>
+					<h2 class="fragment">Effectively once</h2>
+				</section>
+				<section>
+					<img src="images/ui-1.png" class="stretch"/>
+				</section>
+				<section>
+					<h1>\(f(f(x)) = f(x)\)</h1>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo0-Meat/frame" data-frames="16"/>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo0-Ruskie/frame" data-frames="12"/>
+				</section>
+				<section>
+					<img src="images/garbage.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo1-Meat/frame" data-frames="16"/>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo1-SwissCheese/frame" data-frames="8"/>
+				</section>
+				<section>
+					<img src="images/ghost.png" class="stretch"/>
+				</section>		
+				<section>
+					<img src="images/publish-persist.png" class="stretch"/>
+				</section>
+				<section>
+						<h2>Framing the problem</h2>
+						<img src="images/what-do-we-want.png" width="30%" style="float: right"/>
+						<ul style="width: 60%;">
+							<li class="fragment">Don’t lose messages</li>
+							<li class="fragment">Outcome the same no matter how many times we process the message (idempotence)</li>
+							<li class="fragment">Don't leak non-durable state (ghost messages)</li>
+						</ul>
+					</section>
+				<section>
+					<img src="images/publish-persist-2.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="images/sales.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="images/manager.gif" width="30%" style="float: right"/>
+					<div style="width: 60%;">
+						<h2>Requirements change!</h2>
+							If you could add quantity to the order lines
+
+							that would be GREAT!							
+					</div>
+				</section>
+				<section>
+					<img src="images/ui-2.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo2-SwissCheese/frame" data-frames="8"/>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo2-Meat/frame" data-frames="17"/>
+				</section>
+				<section>
+					<img src="images/message-id-generation.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="images/manager.gif" width="30%" style="float: right"/>
+					<div style="width: 60%;">
+						<h2>Requirements change!</h2>
+							If you could allow order lines to be updated
+
+							that would be GREAT!							
+					</div>
+				</section>
+				<section>
+					<img src="images/ui-3.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo3/frame" data-frames="38"/>
+				</section>
+				<section>
+					<h2 class="fragment strike">Effectively once</h2>
+					<h2 class="fragment">Mostly once</h2>
+				</section>
+				<section>
+					<img src="images/manager.gif" width="30%" style="float: right"/>
+					<div style="width: 60%;">
+						<h2>Refactoring sprint!</h2>
+							If you could refrain from adding new features for a month or two and just made the code cleaner and more readable
+
+							that would be GREAT!							
+					</div>
+				</section>
+				<section>
+					<img src="images/live-chat.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="images/outbox.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="" class="demo" data-img-prefix="images/Demo4/frame" data-frames="12"/>
+				</section>
+				<section>
+					<img src="images/manager.gif" width="30%" style="float: right"/>
+					<div style="width: 60%;">
+						<h2>Requirements change!</h2>
+							If you could replace the SQL Sever with some document store
+
+							that would be GREAT!							
+					</div>
+				</section>
+				<section>
+					<h1>Thank you!</h1>
+					<p>Szymon Pobiega</p>
+					<p><a href="https://twitter.com/SzymonPobiega">@SzymonPobiega</a></p>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="lib/js/jquery-2.1.4.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+		$(function() {
+			$('div.commentedContent').each(function(i, div){
+				var lines = $(div).text().split('\n');
+		    	var text = '';
+			    $.each(lines, function(i, line) {
+			        if (line) {
+		            	text += '<p style="text-align: left; white-space: pre; margin: 0; padding: 0;">' + i + ".  " + line + '</p>';
+		        	}
+		    	});
+		    	$(div).html(text);
+
+		    	// apply keywords
+		    	$(div).children().each(function(i,p){
+		    		var par = $(p);
+					var words = par.text().split(" ");
+					par.empty();
+					$.each(words, function(i, w) {
+						if($.inArray(w, ["public", "void", "new", "var", "bool", "object", "using"]) > -1){
+							par.append($('<span style="color: rgb(204, 153, 204);"/>').text(w + " "));
+						}
+						else{
+							par.append(w + " ");
+						}
+					});
+		    	});
+			})
+
+			$('div.contentComment').each(function(i, div){
+				var lines = $(div).text().split('\n');
+		    	var text = '';
+			    $.each(lines, function(i, line) {
+			        if (line) {
+		            	text += '<p style="text-align: right; margin: 0; padding: 0;">' + line + '</p>';
+		        	}
+		    	});
+		    	$(div).html(text);
+			})
+
+			$('img.demo').each(function(i, img){
+				var $img = $(img);
+				var frames = $img.data('frames');
+				var prefix = $img.data('img-prefix');
+				var div = $('<div></div>')
+				for (var i = 1; i < frames; i++) {
+					div.append('<span class="fragment imgsrc" data-src="'+prefix+'-'+i+'.jpg"/>')
+				}
+				$img.append(div);
+				$img.attr('src', prefix+'-'+0+'.jpg')
+			})
+		});
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				margin: 0,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				math: {
+					// mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_HTML-full'
+				},
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+
+			function fadeImage($el) {
+				// Get image DOM element
+				$img = $el.parent().parent();
+				$img.attr('src', $el.data('src'));
+			}
+
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+				var $slide = $(event.currentSlide);
+				var $img = $slide.children('img.demo');
+				var prefix = $img.data('img-prefix');
+				$img.attr('src', prefix+'-'+0+'.jpg')
+			} );
+
+			Reveal.addEventListener('fragmentshown', function(event) {
+				// Get DOM element of current fragment
+				var $el = $(event.fragment);
+
+				// Check if current fragment is of 'type' imgsrc
+				// If yes: fade image with source of current element
+				if($el.hasClass('imgsrc'))
+					fadeImage($el);
+			});
+
+			Reveal.addEventListener('fragmenthidden', function(event) {
+				// Get DOM element of current fragment
+				var $el = $(event.fragment);
+
+				// Check if current fragment is of 'type' imgsrc
+				// If yes: fade image with source of previous element
+				if($el.hasClass('imgsrc')) {
+					fadeImage($el.prev());
+				}
+			});
+
+		</script>
+
+	</body>
+</html>

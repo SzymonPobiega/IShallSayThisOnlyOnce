@@ -36,12 +36,8 @@ class Program
         var config = new EndpointConfiguration("OnlyOnce.Demo3.Orders");
         config.UsePersistence<InMemoryPersistence>();
         config.UseTransport<MsmqTransport>().Transactions(TransportTransactionMode.ReceiveOnly);
-        config.Recoverability().Immediate(x => x.NumberOfRetries(0));
-        config.Recoverability().Delayed(x =>
-        {
-            x.NumberOfRetries(5);
-            x.TimeIncrease(TimeSpan.FromSeconds(3));
-        });
+        config.Recoverability().Immediate(x => x.NumberOfRetries(5));
+        config.LimitMessageProcessingConcurrencyTo(10);
         config.Recoverability().AddUnrecoverableException(typeof(DbEntityValidationException));
         config.SendFailedMessagesTo("error");
         config.Pipeline.Register(new DeduplicatingBehavior(), "Deduplicates incoming messages.");

@@ -8,14 +8,15 @@ class DeduplicatingBehavior : Behavior<IIncomingLogicalMessageContext>
 {
     public override async Task Invoke(IIncomingLogicalMessageContext context, Func<Task> next)
     {
-        var dbContext = new OrdersDataContext(new SqlConnection(Program.ConnectionString));
+        var dbContext = new OrdersDataContext();
 
-        using (var dbContextTransaction = dbContext.Database.BeginTransaction())
+        using (var dbContextTransaction = dbContext
+            .Database.BeginTransaction())
         {
 
-            var processedMessage = await dbContext.ProcessedMessages
+            var processedMessage = await dbContext
+                .ProcessedMessages
                 .FirstOrDefaultAsync(m => m.MessageId == context.MessageId);
-
 
             if (processedMessage != null)
             {
