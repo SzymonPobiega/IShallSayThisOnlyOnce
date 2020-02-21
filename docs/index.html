@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>I shall say this only once</title>
+		<title>Excuse me, my bill does not match my order</title>
 		<meta name="description" content="I shall say this only once">
 		<meta name="author" content="Szymon Pobiega">
 
@@ -67,24 +67,34 @@
 			img.zoom-right-centre {
 				transform: scale(1.8) translate(-25%, 0);
 			}
+
+			.particular-logo {
+				display: none;
+				position: fixed;
+				height: 80px;
+				z-index: 30;
+				left: 20px;
+				bottom: 20px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="reveal">
+			<aside class="particular-logo">
+				<img src="images/Particular.svg" height="100em"/>
+			</aside>
 			<div class="slides">
 				<section>
-					<h2>I shall say this only once</h2>
-					<p>Szymon Pobiega </p>
-					<p><a href="https://twitter.com/Szymon Pobiega">@SzymonPobiega</a></p>
+					<h2>Excuse me, my bill does not match my order</h2>
+					<p><a href="https://exactly-once.github.io/">exactly-once.github.io</a></p>
+					<p><a href="https://twitter.com/SzymonPobiega">twitter.com/SzymonPobiega</a></p>
+					<p><a href="https://www.linkedin.com/in/szymonpobiega/">linkedin.com/in/SzymonPobiega</a></p>
 				</section>
 				<section>
-					<figure>
-						<img src="images/kristen-cooke.jpg" alt=""/>
-						<figcaption>
-							<small>Source: <a href="https://www.imdb.com/title/tt0086659/mediaviewer/rm2056077312">IMDb</a></small>
-						</figcaption>
-					</figure>
+					<h2>Domain-Driven Design</h2>
+					<h2>Event Sourcing</h2>
+					<img src="images/Particular.svg" height="100em"/>
 				</section>
 				<section>
 					<h2>Pierogi time!</h2>
@@ -96,14 +106,17 @@
 					</figure>
 				</section>
 				<section>
-					<img src="images/scaling.png"/>
+					<img src="images/architect.jpg" class="stretch"/>
 				</section>
 				<section>
-					<img src="images/eda.png"/>
+					<img src="images/architecture.png"/>
 				</section>
 				<section>
 					<h2>Exactly once delivery in face of failures</h2>
 					<img src="images/dedup-process.png"/>
+				</section>
+				<section>
+					<img src="images/two-generals-0.png"/>
 				</section>
 				<section>
 					<img src="images/two-generals-1.png"/>
@@ -122,11 +135,15 @@
 					<img src="images/two-generals-4.png"/>
 				</section>
 				<section>
-					<h2 class="fragment strike">Exactly once processing</h2>
-					<h2 class="fragment">Effectively once</h2>
+					<img src="images/ui-1.png" class="stretch"/>
 				</section>
 				<section>
-					<img src="images/ui-1.png" class="stretch"/>
+					<blockquote style="width: 100%;">
+						<h3>
+							"Just make your logic idempotemt" 
+						</h3>
+						-- Twitter Trolls				
+					</blockquote>
 				</section>
 				<section>
 					<h1>\(f(f(x)) = f(x)\)</h1>
@@ -134,6 +151,7 @@
 				<section>
 					<img src="" class="demo" data-img-prefix="images/Demo0-Meat/frame">
 					<div>
+						<span class="fragment imgsrc" data-index="01" data-transform="zoom-right-centre"></span>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-centre"></span>
 						<span class="fragment imgsrc" data-index="2" data-transform="zoom-left-top"></span>
@@ -152,6 +170,9 @@
 						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-centre"></span>
 						<span class="fragment imgsrc" data-index="15" data-transform="zoom-left-centre"></span>
 					</div>
+				</section>
+				<section>
+					<img src="images/shipit.jpg" class="stretch"/>
 				</section>
 				<section>
 					<img src="images/empty-plate.jpg" class="stretch"/>
@@ -200,6 +221,9 @@
 					</div>
 				</section>
 				<section>
+					<img src="images/shipit.jpg" class="stretch"/>
+				</section>
+				<section>
 					<img src="images/empty-plate.jpg" class="stretch"/>
 				</section>
 				<section>
@@ -223,14 +247,22 @@
 					<img src="images/publish-persist.png" class="stretch"/>
 				</section>
 				<section>
-						<h2>Framing the problem</h2>
-						<img src="images/what-do-we-want.png" width="30%" style="float: right"/>
-						<ul style="width: 60%;">
-							<li class="fragment">Don’t lose messages</li>
-							<li class="fragment">Outcome the same no matter how many times we process the message (idempotence)</li>
-							<li class="fragment">Don't leak non-durable state (ghost messages)</li>
-						</ul>
-					</section>
+					<blockquote style="width: 100%;">
+						<h3>
+							"Just make your logic idempotemt" 
+						</h3>
+						-- Twitter Trolls				
+					</blockquote>
+				</section>
+				<section>
+					<h2>Framing the problem</h2>
+					<img src="images/what-do-we-want.png" width="30%" style="float: right"/>
+					<ul style="width: 60%;">
+						<li class="fragment"><h3>Don't lose messages 🗑️</h3></li>
+						<li class="fragment"><h3>Apply state change only once 👯‍♂️</h3></li>
+						<li class="fragment"><h3>Don't leak non-durable state 👻</h3></li>
+					</ul>
+				</section>
 				<section>
 					<img src="images/publish-persist-2.png" class="stretch"/>
 				</section>
@@ -240,14 +272,20 @@
 				<section>
 					<img src="images/manager.gif" width="30%" style="float: right"/>
 					<div style="width: 60%;">
-						<h2>Requirements change!</h2>
-							If you could add quantity to the order lines
-
-							that would be GREAT!							
+						<h3>
+							If you could add quantity to the order lines<br><br>
+							that would be GREAT!
+						</h3>
 					</div>
 				</section>
 				<section>
 					<img src="images/ui-2.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="images/id-card.png"/>
+				</section>
+				<section>
+					<img src="images/item-id-binding.png" class="stretch"/>
 				</section>
 				<section>
 					<img src="" class="demo" data-img-prefix="images/Demo2-SwissCheese/frame">
@@ -290,109 +328,113 @@
 					<img src="images/message-id-generation.png" class="stretch"/>
 				</section>
 				<section>
-					<img src="images/manager.gif" width="30%" style="float: right"/>
-					<div style="width: 60%;">
-						<h2>Requirements change!</h2>
-							If you could allow order lines to be updated
-
-							that would be GREAT!							
-					</div>
+					<h2>Framing the problem</h2>
+					<img src="images/what-do-we-want.png" width="30%" style="float: right"/>
+					<ul style="width: 60%;">
+						<li><h3>Don't lose messages 🗑️</h3></li>
+						<li><h3>Apply state change only once 👯‍♂️</h3></li>
+						<li><h3>Don't leak non-durable state 👻</h3></li>
+					</ul>
 				</section>
 				<section>
-					<img src="images/ui-3.png" class="stretch"/>
+					<h2 class="fragment strike">Apply state change only once</h2>
+					<blockquote class="fragment" cite="https://exactly-once.github.io/posts/consistent-messaging/" style="width: 100%;">
+						<h3>
+							"... we want an endpoint to produce observable side-effects equivalent to some execution in which each logical message gets processed exactly-once" 
+						</h3>
+						-- Tomasz Masternak				
+					</blockquote>
 				</section>
 				<section>
-					<img src="" class="demo" data-img-prefix="images/Demo3/frame">
-					<div>
-						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="1" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="10" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="13" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="15" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="16" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="17" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="18" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="19" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="20" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="21" data-transform="zoom-left-centre"></span>
-						<span class="fragment imgsrc" data-index="22" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="23" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="24" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="25" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="26" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="27" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="28" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="29" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="30" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="31" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="32" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="33" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="34" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="35" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="36" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="37" data-transform="zoom-right-centre"></span>
-					</div>
-				</section>
-				<section>
-					<h2 class="fragment strike">Effectively once</h2>
-					<h2 class="fragment">Mostly once</h2>
+					<blockquotestyle="width: 100%;">
+						<h3>
+							"Just make your logic deterministic" 
+						</h3>
+						-- Twitter Trolls				
+					</blockquote>
 				</section>
 				<section>
 					<img src="images/manager.gif" width="30%" style="float: right"/>
 					<div style="width: 60%;">
-						<h2>Refactoring sprint!</h2>
-							If you could refrain from adding new features for a month or two and just made the code cleaner and more readable
-
-							that would be GREAT!							
+						<h3>If you could add <code>FirstItemAdded</code> event<br><br>
+							that would be GREAT!
+						</h3>
+					</div>
+				</section>
+				<section>
+					<h3 class="fragment">Receive <code>AddItem 123</code><span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Check if not a duplicate<span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Add <code>OrderLine</code> to <code>Order</code> and persist<span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Publish <code>ItemAdded</code><span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Count <code>OrderLines</code><span class="fragment"> 1</span></h3>
+					<h3 class="fragment">Publish <code>FistItemAdded</code><span class="fragment">❌</span></h3>
+					<h3 class="fragment">Put <code>AddItem 123</code> back to queue<span class="fragment">✔️</span></h3>
+				</section>
+				<section>
+					<h3 class="fragment">Receive <code>AddItem 234</code><span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Check if not a duplicate<span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Add <code>OrderLine</code> to <code>Order</code> and persist<span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Publish <code>ItemAdded</code><span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Count <code>OrderLines</code><span class="fragment"> 2</span></h3>
+					<h3 class="fragment"><span style="text-decoration: line-through;">Publish <code>FistItemAdded</code></span></h3>
+				</section>
+				<section>
+					<h3 class="fragment">Receive <code>AddItem 123</code><span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Check if not a duplicate<span class="fragment">👯‍♂️</span></h3>
+					<h3 class="fragment"><span style="text-decoration: line-through;">Add <code>OrderLine</code> to <code>Order</code> and persist</span></h3>
+					<h3 class="fragment">Publish <code>ItemAdded</code><span class="fragment">✔️</span></h3>
+					<h3 class="fragment">Count <code>OrderLines</code><span class="fragment"> 2</span></h3>
+					<h3 class="fragment"><span style="text-decoration: line-through;">Publish <code>FistItemAdded</code></span></h3>
+				</section>
+				<section>
+					<img src="images/garbage.png" class="stretch"/>
+				</section>
+				<section>
+					<h3 class="fragment">Business logic is executed correctly ✔️</h3>
+					<h3 class="fragment">Message publishing is based on an incorrect state ❌</h3>
+				</section>
+				<section>
+					<img src="images/manager.gif" width="30%" style="float: right"/>
+					<div style="width: 60%;">
+						<h3>If you could finally get that code to work<br><br>
+							that would be GREAT!
+						</h3>
 					</div>
 				</section>
 				<section>
 					<img src="images/live-chat.png" class="stretch"/>
 				</section>
 				<section>
-					<img src="images/outbox.png" class="stretch"/>
+					<h2>Consistent messaging</h2>
+					<h3 class="fragment">Durably store outgoing messages</h3>
+					<h3 class="fragment">Re-publish messages based on historic state</h3>
 				</section>
 				<section>
-					<img src="" class="demo" data-img-prefix="images/Demo4/frame">
-					<div>
-						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-centre"></span>
-						<!-- <span class="fragment imgsrc" data-index="9" data-transform="zoom-right-centre"></span> -->
-						<!-- <span class="fragment imgsrc" data-index="10" data-transform="zoom-left-centre"></span> -->
-						<span class="fragment imgsrc" data-index="11" data-transform="zoom-left-centre"></span>
-						<span class="fragment imgsrc" data-index="0" data-transform="zoom-right-centre"></span>
-					</div>
+					<img src="images/outbox.png" class="stretch"/>
 				</section>
 				<section>
 					<img src="images/manager.gif" width="30%" style="float: right"/>
 					<div style="width: 60%;">
-						<h2>Requirements change!</h2>
-							If you could replace the SQL Sever with some document store
-
-							that would be GREAT!							
+						<h3>Do you know why are those messages processed in the wrong order?</h3>
 					</div>
 				</section>
 				<section>
 					<h1>Thank you!</h1>
-					<p>Szymon Pobiega</p>
-					<p><a href="https://twitter.com/SzymonPobiega">@SzymonPobiega</a></p>
+				</section>
+				<section>
+					<img src="images/blog.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="images/micro-cph.png" class="stretch"/>
+				</section>
+				<section>
+					<h1>Thank you!</h1>
+					<p><a href="https://microcph.dk/">microcph.dk</a></p>
+					<p><a href="https://github.com/exactly-once/outbox-based-consistent-messaging">github.com/exactly-once/outbox-based-consistent-messaging</a></p>
+					<p><a href="https://github.com/exactly-once/state-based-consistent-messaging">github.com/state-once/outbox-based-consistent-messaging</a></p>
+					<p><a href="https://exactly-once.github.io/">exactly-once.github.io</a></p>
+					<p><a href="https://twitter.com/SzymonPobiega">twitter.com/SzymonPobiega</a></p>
+					<p><a href="https://www.linkedin.com/in/szymonpobiega/">linkedin.com/in/SzymonPobiega</a></p>
 				</section>
 			</div>
 		</div>

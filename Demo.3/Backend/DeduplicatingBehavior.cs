@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using NServiceBus.Pipeline;
 
