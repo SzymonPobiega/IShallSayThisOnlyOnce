@@ -52,12 +52,16 @@
 			  border-bottom: 1px solid;
 			}
 			
+			img.zoom-centre {
+				transform: scale(2.1) translate(0, 0);
+			}
+			
 			img.zoom-left-centre {
-				transform: scale(2.1) translate(25%, 0);
+				transform: scale(2.2) translate(25%, 0);
 			}
 
 			img.zoom-left-top {
-				transform: scale(2.1) translate(25%, 25%);
+				transform: scale(2.2) translate(25%, 30%);
 			}
 
 			img.zoom-left-bottom {
@@ -66,6 +70,18 @@
 
 			img.zoom-right-centre {
 				transform: scale(1.8) translate(-25%, 0);
+			}
+
+			img.zoom-right-top {
+				transform: scale(2.4) translate(-25%, 20%);
+			}
+
+			img.zoom-right-centre-top {
+				transform: scale(2.4) translate(-25%, 0);
+			}
+
+			img.zoom-right-bottom {
+				transform: scale(2.4) translate(-25%, -25%);
 			}
 
 			.particular-logo {
@@ -181,23 +197,23 @@ public class ConfirmOrderHandler
 				<section>
 					<img src="" class="demo" data-img-prefix="images/Demo0-Meat/frame">
 					<div>
-						<span class="fragment imgsrc" data-index="01" data-transform="zoom-right-centre"></span>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-centre"></span>
 						<span class="fragment imgsrc" data-index="2" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="01" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-bottom"></span>
+						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-bottom"></span>
+						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-bottom"></span>
 						<span class="fragment imgsrc" data-index="10" data-transform="zoom-left-centre"></span>
-						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="13" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="13" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-top"></span>
 						<span class="fragment imgsrc" data-index="15" data-transform="zoom-left-centre"></span>
 					</div>
 				</section>
@@ -234,16 +250,16 @@ System.Exception: Channel has been closed: AMQP close-reason,
 					<img src="" class="demo" data-img-prefix="images/Demo0-Ruskie/frame">
 					<div>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="1" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="1" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre-top"></span>
 						<span class="fragment imgsrc" data-index="7" data-transform="zoom-left-centre"></span>
-						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="10" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="10" data-transform="zoom-right-top"></span>
 						<span class="fragment imgsrc" data-index="11" data-transform="zoom-left-centre"></span>
 					</div>
 				</section>
@@ -263,21 +279,21 @@ System.Exception: Channel has been closed: AMQP close-reason,
 					<div>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
 						<span class="fragment imgsrc" data-index="2" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-bottom"></span>
+						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-bottom"></span>
+						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-bottom"></span>
+						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-bottom"></span>
 						<span class="fragment imgsrc" data-index="10" data-transform="zoom-left-centre"></span>
 						<span class="fragment imgsrc" data-index="11" data-transform="zoom-left-centre"></span>
-						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="13" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="15" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="13" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="15" data-transform="zoom-right-top"></span>
 						<span class="fragment imgsrc" data-index="15" data-transform="zoom-left-centre"></span>
 					</div>
 				</section>
@@ -303,12 +319,12 @@ Transaction (Process ID) was deadlocked on lock
 					<img src="" class="demo" data-img-prefix="images/Demo1-SwissCheese/frame">
 					<div>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre-top"></span>
 						<span class="fragment imgsrc" data-index="7" data-transform="zoom-left-centre"></span>
 						<span class="fragment imgsrc" data-index="7" data-transform="zoom-left-bottom"></span>
 					</div>
@@ -364,12 +380,12 @@ Transaction (Process ID) was deadlocked on lock
 					<img src="" class="demo" data-img-prefix="images/Demo2-SwissCheese/frame">
 					<div>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre-top"></span>
 						<span class="fragment imgsrc" data-index="7" data-transform="zoom-left-centre"></span>
 					</div>
 				</section>
@@ -378,20 +394,20 @@ Transaction (Process ID) was deadlocked on lock
 					<div>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
 						<span class="fragment imgsrc" data-index="2" data-transform="zoom-left-top"></span>
-						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="2" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="3" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="4" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="5" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="6" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-bottom"></span>
+						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-bottom"></span>
 						<span class="fragment imgsrc" data-index="10" data-transform="zoom-left-centre"></span>
-						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="13" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-centre"></span>
-						<span class="fragment imgsrc" data-index="15" data-transform="zoom-right-centre"></span>
+						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="13" data-transform="zoom-right-top"></span>
+						<span class="fragment imgsrc" data-index="14" data-transform="zoom-right-centre-top"></span>
+						<span class="fragment imgsrc" data-index="15" data-transform="zoom-right-bottom"></span>
 						<span class="fragment imgsrc" data-index="15" data-transform="zoom-left-centre"></span>
 						<span class="fragment imgsrc" data-index="16" data-transform="zoom-left-bottom"></span>
 					</div>
