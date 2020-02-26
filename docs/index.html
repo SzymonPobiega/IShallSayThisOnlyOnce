@@ -76,6 +76,10 @@
 				left: 20px;
 				bottom: 20px;
 			}
+
+			pre {
+				tab-size: 3;
+			}
 		</style>
 	</head>
 
@@ -135,6 +139,15 @@
 					<img src="images/two-generals-4.png"/>
 				</section>
 				<section>
+					<h2>Pierogi</h2>
+					<figure>
+						<img src="images/pierogi.jpg" alt="" class="stretch"/>
+						<figcaption>
+							<small>Autor: Stako (File:Ruskie.jpg) [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a> lub <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>], <a href="https://commons.wikimedia.org/wiki/File:Pierogi_z_cebulk%C4%85.jpg">Wikimedia Commons</a></small>
+						</figcaption>
+					</figure>
+				</section>
+				<section>
 					<img src="images/ui-1.png" class="stretch"/>
 				</section>
 				<section>
@@ -147,6 +160,23 @@
 				</section>
 				<section>
 					<h1>\(f(f(x)) = f(x)\)</h1>
+				</section>
+				<section>
+					<h2>
+					<pre class="stretch"><code class="csharp" data-noescape data-trim data-line-numbers="1|2|4-5|7|8|9-10">
+public class ConfirmOrderHandler 
+	: IHandleMessages&lt;ConfirmOrder&gt;
+{
+	public Task Handle(ConfirmOrder msg, 
+		IMessageHandlingContext context)
+	{
+		/*business logic*/
+
+		context.Publish(evnt);
+	}
+}
+					</code></pre>
+					</h2>
 				</section>
 				<section>
 					<img src="" class="demo" data-img-prefix="images/Demo0-Meat/frame">
@@ -178,6 +208,29 @@
 					<img src="images/empty-plate.jpg" class="stretch"/>
 				</section>
 				<section>
+					<h3>
+					<pre class="stretch">
+						<code data-noescape data-trim class="nohighlight">
+System.Messaging.MessageQueueException (0x80004005): 
+↳ Insufficient resources to perform operation.
+↳ at System.Messaging.MessageQueue.SendInternal(Object obj, 
+↳ MessageQueueTransaction internalTransaction, 
+↳ MessageQueueTransactionType transactionType)
+						</code>
+					</pre>
+					<pre class="stretch">
+							<code data-noescape data-trim class="nohighlight">
+System.Exception: Channel has been closed: AMQP close-reason, 
+↳ initiated by Library, code=541, text="Unexpected Exception", 
+↳ classId=0, methodId=0, cause=System.Net.Sockets.SocketException
+↳ A connection attempt failed because the connected party did not 
+↳ properly respond after a period of time, or established 
+↳ connection failed because connected host has failed to respond
+							</code>
+						</pre>
+					</h3>
+				</section>
+				<section>
 					<img src="" class="demo" data-img-prefix="images/Demo0-Ruskie/frame">
 					<div>
 						<span class="fragment imgsrc" data-index="1" data-transform="zoom-left-top"></span>
@@ -196,6 +249,14 @@
 				</section>
 				<section>
 					<img src="images/garbage.png" class="stretch"/>
+				</section>
+				<section>
+					<h2>Persist state✔️</h2>
+					<h2>Publish event🔥</h2>
+				</section>
+				<section>
+					<h2>Publish event</h2>
+					<h2>Persist state</h2>
 				</section>
 				<section>
 					<img src="" class="demo" data-img-prefix="images/Demo1-Meat/frame">
@@ -225,6 +286,18 @@
 				</section>
 				<section>
 					<img src="images/empty-plate.jpg" class="stretch"/>
+				</section>
+				<section>
+					<h2>
+					<pre class="stretch">
+						<code data-noescape data-trim class="nohighlight">
+Transaction (Process ID) was deadlocked on lock 
+↳ resources with another process and has been 
+↳ chosen as the deadlock victim. 
+↳ Rerun the transaction.
+						</code>
+					</pre>
+					</h2>
 				</section>
 				<section>
 					<img src="" class="demo" data-img-prefix="images/Demo1-SwissCheese/frame">
@@ -313,7 +386,6 @@
 						<span class="fragment imgsrc" data-index="7" data-transform="zoom-right-centre"></span>
 						<span class="fragment imgsrc" data-index="8" data-transform="zoom-right-centre"></span>
 						<span class="fragment imgsrc" data-index="9" data-transform="zoom-right-centre"></span>
-						<!-- <span class="fragment imgsrc" data-index="10" data-transform="zoom-left-centre"></span> -->
 						<span class="fragment imgsrc" data-index="10" data-transform="zoom-left-centre"></span>
 						<span class="fragment imgsrc" data-index="11" data-transform="zoom-right-centre"></span>
 						<span class="fragment imgsrc" data-index="12" data-transform="zoom-right-centre"></span>
@@ -362,6 +434,9 @@
 					</div>
 				</section>
 				<section>
+					<img src="images/shipit.jpg" class="stretch"/>
+				</section>
+				<section>
 					<h3 class="fragment">Receive <code>AddItem 123</code><span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Check if not a duplicate<span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Add <code>OrderLine</code> to <code>Order</code> and persist<span class="fragment">✔️</span></h3>
@@ -390,8 +465,13 @@
 					<img src="images/garbage.png" class="stretch"/>
 				</section>
 				<section>
-					<h3 class="fragment">Business logic is executed correctly ✔️</h3>
+					<h3 class="fragment">Business logic is executed correctly✔️</h3>
 					<h3 class="fragment">Message publishing is based on an incorrect state ❌</h3>
+				</section>
+				<section>
+					<h2>Consistent messaging</h2>
+					<h3 class="fragment">Re-publish messages based on historic state</h3>
+					<h3 class="fragment">Durably store outgoing messages</h3>
 				</section>
 				<section>
 					<img src="images/manager.gif" width="30%" style="float: right"/>
@@ -404,11 +484,7 @@
 				<section>
 					<img src="images/live-chat.png" class="stretch"/>
 				</section>
-				<section>
-					<h2>Consistent messaging</h2>
-					<h3 class="fragment">Durably store outgoing messages</h3>
-					<h3 class="fragment">Re-publish messages based on historic state</h3>
-				</section>
+				
 				<section>
 					<img src="images/outbox.png" class="stretch"/>
 				</section>
@@ -419,9 +495,6 @@
 					</div>
 				</section>
 				<section>
-					<h1>Thank you!</h1>
-				</section>
-				<section>
 					<img src="images/blog.png" class="stretch"/>
 				</section>
 				<section>
@@ -429,9 +502,7 @@
 				</section>
 				<section>
 					<h1>Thank you!</h1>
-					<p><a href="https://microcph.dk/">microcph.dk</a></p>
-					<p><a href="https://github.com/exactly-once/outbox-based-consistent-messaging">github.com/exactly-once/outbox-based-consistent-messaging</a></p>
-					<p><a href="https://github.com/exactly-once/state-based-consistent-messaging">github.com/state-once/outbox-based-consistent-messaging</a></p>
+					<p><a href="https://github.com/exactly-once/">github.com/exactly-once</a></p>
 					<p><a href="https://exactly-once.github.io/">exactly-once.github.io</a></p>
 					<p><a href="https://twitter.com/SzymonPobiega">twitter.com/SzymonPobiega</a></p>
 					<p><a href="https://www.linkedin.com/in/szymonpobiega/">linkedin.com/in/SzymonPobiega</a></p>
