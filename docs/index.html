@@ -85,7 +85,6 @@
 			}
 
 			.particular-logo {
-				display: none;
 				position: fixed;
 				height: 80px;
 				z-index: 30;
@@ -179,7 +178,7 @@
 				</section>
 				<section>
 					<h2>
-					<pre class="stretch"><code class="csharp" data-noescape data-trim data-line-numbers="1|2|4-5|7|8|9-10">
+					<pre class="stretch"><code class="csharp" data-noescape data-trim data-line-numbers="1|2|4-5|7|9">
 public class ConfirmOrderHandler 
 	: IHandleMessages&lt;ConfirmOrder&gt;
 {
@@ -450,10 +449,30 @@ Transaction (Process ID) was deadlocked on lock
 					</div>
 				</section>
 				<section>
-					<img src="images/shipit.jpg" class="stretch"/>
+					<h2>
+					<pre class="stretch"><code class="csharp" data-noescape data-trim data-line-numbers="7|8|10-11">
+public class AddItemHandler 
+	: IHandleMessages&lt;AddItem&gt;
+{
+	public Task Handle(AddItem message, 
+		IMessageHandlingContext context)
+	{
+		/*...*/
+		if (order.Lines.Count == 1)
+		{ 
+			context.Publish(
+				new FirstItemAdded(/*...*/));
+		}
+	}
+}
+					</code></pre>
+					</h2>
 				</section>
 				<section>
-					<h3 class="fragment">Receive <code>AddItem 123</code><span class="fragment">✔️</span></h3>
+					<img src="images/shipit.jpg" class="stretch"/>
+				</section>
+				<section style="text-align: left">
+					<h3 class="fragment" >Receive <code>AddItem 123</code><span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Check if not a duplicate<span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Add <code>OrderLine</code> to <code>Order</code> and persist<span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Publish <code>ItemAdded</code><span class="fragment">✔️</span></h3>
@@ -461,7 +480,7 @@ Transaction (Process ID) was deadlocked on lock
 					<h3 class="fragment">Publish <code>FistItemAdded</code><span class="fragment">🔥</span></h3>
 					<h3 class="fragment">Put <code>AddItem 123</code> back to queue<span class="fragment">✔️</span></h3>
 				</section>
-				<section>
+				<section style="text-align: left">
 					<h3 class="fragment">Receive <code>AddItem 234</code><span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Check if not a duplicate<span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Add <code>OrderLine</code> to <code>Order</code> and persist<span class="fragment">✔️</span></h3>
@@ -469,7 +488,7 @@ Transaction (Process ID) was deadlocked on lock
 					<h3 class="fragment">Count <code>OrderLines</code><span class="fragment"> 2</span></h3>
 					<h3 class="fragment"><span style="text-decoration: line-through;">Publish <code>FistItemAdded</code></span></h3>
 				</section>
-				<section>
+				<section style="text-align: left">
 					<h3 class="fragment">Receive <code>AddItem 123</code><span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Check if not a duplicate<span class="fragment">👯‍♂️</span></h3>
 					<h3 class="fragment"><span style="text-decoration: line-through;">Add <code>OrderLine</code> to <code>Order</code> and persist</span></h3>
@@ -500,7 +519,6 @@ Transaction (Process ID) was deadlocked on lock
 				<section>
 					<img src="images/live-chat.png" class="stretch"/>
 				</section>
-				
 				<section>
 					<img src="images/outbox.png" class="stretch"/>
 				</section>
@@ -511,6 +529,10 @@ Transaction (Process ID) was deadlocked on lock
 					</div>
 				</section>
 				<section>
+					<h1>The End<span class="fragment"> ?</span></h1>
+				</section>
+				<section>
+					<h3>exactly-once.github.io</h3>
 					<img src="images/blog.png" class="stretch"/>
 				</section>
 				<section>
