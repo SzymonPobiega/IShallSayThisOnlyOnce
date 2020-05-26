@@ -51,6 +51,15 @@
 			  padding: 0.2em 0.5em 0.2em 0.5em;
 			  border-bottom: 1px solid;
 			}
+
+			section img {
+				padding-bottom: 50px;
+				padding-top: 50px;
+			}
+			section img.demo {
+				padding-bottom: 0;
+				padding-top: 0;
+			}
 			
 			img.zoom-centre {
 				transform: scale(2.1) translate(0, 0);
@@ -91,6 +100,13 @@
 				left: 20px;
 				bottom: 20px;
 			}
+			.twitter-blog {
+				position: fixed;
+				height: 80px;
+				z-index: 30;
+				right: 20px;
+				bottom: 20px;
+			}
 
 			pre {
 				tab-size: 3;
@@ -103,6 +119,9 @@
 			<aside class="particular-logo">
 				<img src="images/Particular.svg" height="100em"/>
 			</aside>
+			<aside class="twitter-blog">
+				<div>@SzymonPobiega | exactly-once.github.io</div>
+			</aside>
 			<div class="slides">
 				<section>
 					<h2>Excuse me, my bill does not match my order</h2>
@@ -113,22 +132,23 @@
 				<section>
 					<h2>Domain-Driven Design</h2>
 					<h2>Event Sourcing</h2>
-					<img src="images/Particular.svg" height="100em"/>
+					<img src="images/Particular.svg" style="padding-bottom: 0px; padding-top: 0px" height="100em"/>
 				</section>
 				<section>
 					<h2>Pierogi</h2>
-					<figure>
-						<img src="images/pierogi.jpg" alt="" class="stretch"/>
-						<figcaption>
-							<small>Autor: Stako (File:Ruskie.jpg) [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a> lub <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>], <a href="https://commons.wikimedia.org/wiki/File:Pierogi_z_cebulk%C4%85.jpg">Wikimedia Commons</a></small>
-						</figcaption>
-					</figure>
+					<img src="images/pierogi.jpg" alt="" class="stretch"/>
+					<figcaption>
+						<small>Autor: Stako (File:Ruskie.jpg) [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a> lub <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>], <a href="https://commons.wikimedia.org/wiki/File:Pierogi_z_cebulk%C4%85.jpg">Wikimedia Commons</a></small>
+					</figcaption>
 				</section>
 				<section>
 					<img src="images/architect.jpg" class="stretch"/>
 				</section>
 				<section>
 					<img src="images/architecture.png"/>
+				</section>
+				<section>
+					<h1>Network is reliable</h1>
 				</section>
 				<section>
 					<h2>Exactly once delivery in face of failures</h2>
@@ -155,15 +175,10 @@
 				</section>
 				<section>
 					<h2>Pierogi</h2>
-					<figure>
-						<img src="images/pierogi.jpg" alt="" class="stretch"/>
-						<figcaption>
-							<small>Autor: Stako (File:Ruskie.jpg) [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a> lub <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>], <a href="https://commons.wikimedia.org/wiki/File:Pierogi_z_cebulk%C4%85.jpg">Wikimedia Commons</a></small>
-						</figcaption>
-					</figure>
-				</section>
-				<section>
-					<img src="images/ui-1.png" class="stretch"/>
+					<img src="images/pierogi.jpg" alt="" class="stretch"/>
+					<figcaption>
+						<small>Autor: Stako (File:Ruskie.jpg) [<a href="http://www.gnu.org/copyleft/fdl.html">GFDL</a> lub <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA-3.0</a>], <a href="https://commons.wikimedia.org/wiki/File:Pierogi_z_cebulk%C4%85.jpg">Wikimedia Commons</a></small>
+					</figcaption>
 				</section>
 				<section>
 					<blockquote style="width: 100%;">
@@ -175,6 +190,12 @@
 				</section>
 				<section>
 					<h1>\(f(f(x)) = f(x)\)</h1>
+				</section>
+				<section>
+					<img src="images/ui-1.png" class="stretch"/>
+				</section>
+				<section>
+					<img src="images/check-process-mark.png" class="stretch"/>
 				</section>
 				<section>
 					<h2>
@@ -486,7 +507,7 @@ public class AddItemHandler
 					<h3 class="fragment">Add <code>OrderLine</code> to <code>Order</code> and persist<span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Publish <code>ItemAdded</code><span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Count <code>OrderLines</code><span class="fragment"> 2</span></h3>
-					<h3 class="fragment"><span style="text-decoration: line-through;">Publish <code>FistItemAdded</code></span></h3>
+					<h3 class="fragment"><span class="fragment strike">Publish <code>FistItemAdded</code></span></h3>
 				</section>
 				<section style="text-align: left">
 					<h3 class="fragment">Receive <code>AddItem 123</code><span class="fragment">✔️</span></h3>
@@ -494,7 +515,7 @@ public class AddItemHandler
 					<h3 class="fragment"><span style="text-decoration: line-through;">Add <code>OrderLine</code> to <code>Order</code> and persist</span></h3>
 					<h3 class="fragment">Publish <code>ItemAdded</code><span class="fragment">✔️</span></h3>
 					<h3 class="fragment">Count <code>OrderLines</code><span class="fragment"> 2</span></h3>
-					<h3 class="fragment"><span style="text-decoration: line-through;">Publish <code>FistItemAdded</code></span></h3>
+					<h3 class="fragment"><span class="fragment strike">Publish <code>FistItemAdded</code></span></h3>
 				</section>
 				<section>
 					<img src="images/garbage.png" class="stretch"/>
@@ -536,9 +557,6 @@ public class AddItemHandler
 					<img src="images/blog.png" class="stretch"/>
 				</section>
 				<section>
-					<img src="images/micro-cph.png" class="stretch"/>
-				</section>
-				<section>
 					<h1>Thank you!</h1>
 					<p><a href="https://github.com/exactly-once/">github.com/exactly-once</a></p>
 					<p><a href="https://exactly-once.github.io/">exactly-once.github.io</a></p>
@@ -574,7 +592,7 @@ public class AddItemHandler
 			// Full list of configuration options available at:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
-				controls: true,
+				controls: false,
 				progress: true,
 				history: true,
 				center: true,
